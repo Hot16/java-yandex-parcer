@@ -6,10 +6,7 @@ package parcer.yandex;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Parser {
     public static void main(String[] args) throws IOException {
@@ -29,12 +26,22 @@ public class Parser {
 		 * "(login and password from Yandex.XML service)"); }
 		 */
 
-        Scanner inp = new Scanner(System.in);
+        Config conf = new Config();
 
+        try {
+            conf.getConfig();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+        Scanner inp = new Scanner(System.in);
+        System.out.println("Input query string");
         String query = inp.nextLine();
 
-        String username = ""; // log in yandex
-        String password = ""; // your key
+        String username = conf.configData.get("name"); // log in yandex
+        String password = conf.configData.get("key");; // your key
         // API
         String lr = ""; // region
         String l10n = ""; // language
@@ -43,7 +50,7 @@ public class Parser {
         String groupBy = "attr%3Dd.mode%3Ddeep.groups-on-page%3D300.docs-in-group%3D1";
         String page = "";
 
-        String pathToSave = "/home/serg/IdeaProject/YaParcer/parserResult/"; //path to save result files
+        String pathToSave = conf.configData.get("path");; //path to save result files
 
         for (int i = 1; i <= 1; i++) {
 
